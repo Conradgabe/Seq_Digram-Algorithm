@@ -1,0 +1,36 @@
+@startuml
+participant user
+participant companyRanks
+participant companyStocks
+participant database
+participant API
+
+user -> companyRanks : getRankedCompany()
+activate companyRanks
+companyRanks -> API : getCompanyData()
+activate API
+API -> database : postCompanyData()
+activate database
+database -> API : receiveCompanyData()
+activate API
+database <-- API: StructuredResponse
+deactivate API
+database -> companyRanks : getCompanyData(CompanyRanks)
+deactivate database
+deactivate API
+deactivate companyRanks
+user -> companyStocks : getStocksCompany()
+activate companyStocks
+companyStocks -> API : getStocksCompanyData()
+activate API
+API -> database : postStocksCompanyData()
+activate database
+database -> API : recieveStocksCompanyData()
+activate API
+database <-- API: structuredResponse
+deactivate API
+database -> companyStocks : getStocksCompany(CompanyStocksMarketInfo)
+deactivate database
+deactivate API
+deactivate companyStocks
+@enduml
